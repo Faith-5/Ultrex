@@ -1,0 +1,10 @@
+fastapi==0.110.1
+uvicorn==0.29.0
+groq==0.4.2
+python-dotenv==1.0.1
+pydantic==2.6.4
+httpx==0.27.0
+edge-tts==6.1.10
+mutagen==1.47.0
+libsql==0.0.1
+APScheduler==3.10.4

@@ -1,0 +1,58 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Logs
+logs/
+*.log
+
+# VS Code / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Generated Media Assets
+# (Ignores the heavy files but keeps the directory structure intact if you use .gitkeep)
+app/static/generated_images/*.png
+app/static/generated_images/*.jpg
+app/static/generated_audios/*.mp3
+app/static/generated_audios/*.wav
+app/static/generated_videos/*.mp4
+app/static/temp_render/*.ass
+app/static/temp_render/*.txt

@@ -47,6 +47,13 @@ logs/
 ehthumbs.db
 Thumbs.db
 
+# Local OAuth / Google upload files
+client_secrets.json
+token.pickle
+
+# Optional local assets
+app/static/bg_music.mp3
+
 # Generated Media Assets
 # (Ignores the heavy files but keeps the directory structure intact if you use .gitkeep)
 app/static/generated_images/*.png

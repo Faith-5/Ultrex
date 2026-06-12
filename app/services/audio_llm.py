@@ -48,9 +48,7 @@ class AudioService:
     ):
         
         if voice and voice not in VERIFIED_VOICES:
-            logger.warning(
-                "Voice '%s' not in verified list. Falling back to genre auto-select.", voice
-            )
+            logger.warning("Voice %s not found, auto-select", voice)
             voice = None
 
         resolved_voice_key = (
@@ -61,10 +59,7 @@ class AudioService:
 
         edge_voice_name, edge_pitch = VERIFIED_VOICES[resolved_voice_key]
 
-        logger.info(
-            "Audio generation started for %d scenes | genre: '%s' | edge-voice: '%s' | pitch: '%s'",
-            len(scenes), niche, edge_voice_name, edge_pitch
-        )
+        logger.info("Audio: %d scenes | voice: %s", len(scenes), resolved_voice_key)
 
         tasks =[
             self._bounded_generate(scene, edge_voice_name, edge_pitch)
@@ -73,10 +68,7 @@ class AudioService:
         await asyncio.gather(*tasks)
 
         successful = sum(1 for s in scenes if s.audio_url is not None)
-        logger.info(
-            "Audio generation complete. Success: %d | Failed: %d",
-            successful, len(scenes) - successful,
-        )
+        logger.info("Audio: %d ok, %d failed", successful, len(scenes) - successful)
 
     # ── Concurrency wrapper ────────────────────────────────────────────────────
     async def _bounded_generate(self, scene: Scene, edge_voice_name: str, edge_pitch: str):
@@ -98,7 +90,7 @@ class AudioService:
                     text=clean_text, 
                     voice=edge_voice_name, 
                     pitch=edge_pitch,
-                    rate="+0%" # Adjust this (e.g. "+10%") if you want it faster
+                    rate="+5%" # Adjust this (e.g. "+10%") if you want it faster
                 )
                 await communicate.save(filepath)
 
@@ -106,28 +98,17 @@ class AudioService:
                 if not os.path.exists(filepath) or os.path.getsize(filepath) == 0:
                     raise ValueError("Edge-TTS generated an empty file or connection dropped.")
 
-                # Populate duration — video_compiler reads this per scene
                 scene.duration = self._get_audio_duration(filepath, clean_text)
                 scene.audio_url = f"{self.base_url}/static/generated_audios/{filename}"
 
-                logger.info(
-                    "✓ Scene %d audio saved. Duration: %.2fs | Voice: %s",
-                    scene.scene_number, scene.duration, edge_voice_name,
-                )
+                logger.info("✓ Scene %d: %.2fs | %s", scene.scene_number, scene.duration, edge_voice_name)
                 return  # SUCCESS — exit retry loop immediately
 
             except Exception as e:
-                logger.warning(
-                    "Attempt %d/%d failed for scene %d audio: %s",
-                    attempt, self.MAX_RETRIES, scene.scene_number, str(e),
-                )
+                logger.warning("Scene %d attempt %d/%d: %s", scene.scene_number, attempt, self.MAX_RETRIES, str(e)[:60])
                 if attempt == self.MAX_RETRIES:
-                    logger.error(
-                        "✗ Permanent audio failure for scene %d. Skipping.",
-                        scene.scene_number,
-                    )
+                    logger.error("✗ Scene %d: permanent failure", scene.scene_number)
                     scene.audio_url = None
-                    # Still set duration so video_compiler doesn't crash
                     scene.duration = self._estimate_duration_from_text(clean_text)
                 else:
                     await asyncio.sleep(2 * attempt)  # 2s, 4s, 6s backoff

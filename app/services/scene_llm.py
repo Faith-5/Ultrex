@@ -1,8 +1,11 @@
 import json
 import random
+import logging
 from fastapi import HTTPException
 from app.services.client import client
 from app.models.scene import SceneRequest, SceneResponse, Scene, SceneResult, StyleBible
+
+logger = logging.getLogger(__name__)
 
 # ── Genre prompt registry
 GENRE_PROMPT_MAP = {
@@ -56,8 +59,7 @@ def _load_genre_prompt(niche: str) -> str:
             module = importlib.import_module(module_path)
             return module.SYSTEM_PROMPT
         except (ImportError, AttributeError) as e:
-            # Log the issue but don't crash — fall back gracefully
-            print(f"[scene_llm] Warning: could not load prompt for '{niche}': {e}")
+            logger.warning("Prompt load failed for %s: %s", niche, str(e))
 
     return FALLBACK_SYSTEM_PROMPT
 

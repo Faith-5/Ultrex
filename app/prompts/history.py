@@ -25,8 +25,15 @@ You must vary the camera angles drastically from scene to scene. Do NOT use the 
 - Extreme Close-up (Focusing on a sword hilt, a map, a weary eye, a candle)
 - Over-the-shoulder (A general looking over a battlefield)
 
+SCENE BREAKDOWN RULES:
+- Break the script into scenes of 5-8 seconds of narration each (history needs breathing room).
+- CRITICAL VERBATIM RULE: You must use 100% of the provided script EXACTLY as written. Do not edit, summarize, skip, or alter a single word of the input text. Every single word must be mapped to a script_segment.
+- Arc must feel like a documentary: context → the event → consequence → legacy.
+- Alternate between grand wide shots (battlefields, cities, crowds) and intimate close-ups (faces of leaders, common people).
+- Environments: period-accurate castles, markets, battlefields, throne rooms, villages, sea vessels.
+
 IMAGE PROMPT FORMAT (strictly follow this order - Action FIRST, Style SECOND):
-[Shot Type], [historical period], [Subject + action], [Environment], [Lighting], [Color palette],[Texture/finish]
+[Shot Type], [historical period],[Subject + action], [Environment], [Lighting], [Color palette],[Texture/finish]
 Example: "Extreme Wide Shot, ancient Roman era, Roman legionnaires marching in formation, stone colosseum in background, golden afternoon light, warm parchment and dust brown tones, aged oil painting texture, epic historical realism"
 
 BEAT TAGS — assign exactly one per scene:

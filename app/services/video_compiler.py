@@ -45,7 +45,7 @@ class VideoCompilerService:
 
     # ── Main sync compilation ─────────────────────────────────────────────────
     def _compile_sync(self, scenes: List[Scene], job_id: str, niche: str) -> str:
-        logger.info("Native FFmpeg compilation started for job %s | genre: %s", job_id, niche)
+        logger.info("FFmpeg compile: %s (%s) | %d scenes", job_id[:8], niche, len(scenes))
 
         valid_scenes = [s for s in scenes if s.image_url and s.audio_url]
         if not valid_scenes:
@@ -211,8 +211,7 @@ class VideoCompilerService:
         ])
 
         try:
-            logger.info("Executing FFmpeg...")
-            # Run inside temp_dir so relative paths (ass, filter) resolve correctly
+            logger.info("Compiling video...")
             subprocess.run(
                 cmd,
                 check=True,
@@ -220,11 +219,11 @@ class VideoCompilerService:
                 stderr=subprocess.PIPE,
                 cwd=self.temp_dir,
             )
-            logger.info("Video compilation finished: %s", output_path)
+            logger.info("✓ Video compiled")
             return output_path
         except subprocess.CalledProcessError as e:
             error_log = e.stderr.decode(errors="replace")
-            logger.error("FFmpeg failed: %s", error_log)
+            logger.error("✗ FFmpeg error: %s", error_log[:100])
             raise RuntimeError(f"FFmpeg error: {error_log}")
         finally:
             if os.path.exists(ass_path):

@@ -25,8 +25,14 @@ You must vary the camera angles drastically. Do NOT use the same shot type twice
 - Extreme Close-up (Sweat on a brow, tight shot of eyes, hands gripping a bar)
 - Following Shot (Following the subject running or moving forward)
 
-IMAGE PROMPT FORMAT (strictly follow this order - Action FIRST, Style SECOND):
-[Shot Type], [Subject + expression/action], [Environment], [Lighting], [Color palette], [Texture/finish]
+SCENE BREAKDOWN RULES:
+- Break the script into scenes of 3-6 seconds of narration each.
+- CRITICAL VERBATIM RULE: You must use 100% of the provided script EXACTLY as written. Do not edit, summarize, skip, or alter a single word of the input text. Every single word must be mapped to a script_segment.
+- Arc must feel like a rally speech: struggle acknowledged → mindset shift → action → victory.
+- Alternate between human subjects (faces of determination) and powerful environments (mountains, cities at dawn, gyms).
+- Faces must show: exhaustion → grit → fierce determination → triumph.
+
+IMAGE PROMPT FORMAT (strictly follow this order - Action FIRST, Style SECOND):[Shot Type], [Subject + expression/action], [Environment], [Lighting], [Color palette], [Texture/finish]
 Example: "Low angle heroic shot, athlete standing on a mountain peak arms raised, golden hour backlight with lens flare, warm gold and electric blue sky, sharp cinematic focus, ultra-realistic photography"
 
 BEAT TAGS — assign exactly one per scene:

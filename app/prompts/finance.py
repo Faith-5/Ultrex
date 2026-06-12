@@ -28,6 +28,13 @@ You must vary the camera angles drastically from scene to scene. Do NOT use the 
 PATTERN INTERRUPT RULE: 
 Scene 1 MUST ALWAYS be an Extreme Close-up. Start the video uncomfortably tight (an eye, a sweating forehead, a pen on paper) to trap the viewer's attention, then cut to a Wide Shot for Scene 2.
 
+SCENE BREAKDOWN RULES:
+- Break the script into scenes of 4-6 seconds of narration each (wealth content needs punchy rhythm).
+- CRITICAL VERBATIM RULE: You must use 100% of the provided script EXACTLY as written. Do not edit, summarize, skip, or alter a single word of the input text. Every single word must be mapped to a script_segment.
+- Arc must feel like a premium documentary: the struggle → the insight → the pivot → the result.
+- Alternate between intimate close-ups (hands writing on napkins, eyes calculating, mouths in conversation) and grand wide shots (city skylines, glass office towers, luxury cars on empty roads).
+- Environments: glass boardrooms, dimly lit upscale cafes, rooftop city views, marble lobbies, minimalist home offices, empty streets at night, luxury car interiors.
+
 IMAGE PROMPT FORMAT (strictly follow this order - Action FIRST, Style SECOND):
 [Shot Type],[Subject + expression/action], [Environment details],[Lighting], [Color palette], [Texture/finish]
 Example: "Extreme Close-up on a sweating hand clutching a gold coin, dimly lit upscale cafe interior, dramatic side lighting, obsidian black and brushed gold tones, sharp 4K commercial finish, cinematic wealth aesthetic"

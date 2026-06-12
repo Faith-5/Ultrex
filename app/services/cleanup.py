@@ -11,7 +11,7 @@ def cleanup_intermediate_assets(scenes: List[Scene], static_path: str, job_id: s
     Tier 1 Cleanup: Deletes raw images and audio files immediately 
     after a successful video compilation.
     """
-    logger.info(f"Tier 1 Cleanup: Removing intermediate assets for job {job_id}")
+    logger.info("T1 cleanup: job %s", job_id)
     
     for scene in scenes:
         # Delete image
@@ -22,7 +22,7 @@ def cleanup_intermediate_assets(scenes: List[Scene], static_path: str, job_id: s
                 try:
                     os.remove(img_path)
                 except Exception as e:
-                    logger.warning(f"Could not delete {img_path}: {e}")
+                    logger.warning("Img del failed: %s", str(e)[:60])
         
         # Delete audio
         if scene.audio_url:
@@ -32,9 +32,9 @@ def cleanup_intermediate_assets(scenes: List[Scene], static_path: str, job_id: s
                 try:
                     os.remove(aud_path)
                 except Exception as e:
-                    logger.warning(f"Could not delete {aud_path}: {e}")
+                    logger.warning("Aud del failed: %s", str(e)[:60])
                     
-    logger.info(f"Tier 1 Cleanup complete for job {job_id}.")
+    logger.info("T1 cleanup done")
 
 def cleanup_old_files(static_path: str, hours_old: int = 48):
     """

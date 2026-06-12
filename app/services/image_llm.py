@@ -27,7 +27,7 @@ class ImageService:
         self.semaphore = asyncio.Semaphore(self.MAX_CONCURRENT)
 
     async def generate_all_images(self, scenes: List[Scene], style_bible: Optional[StyleBible] = None, model: str = None):
-        logger.info("Image generation started for %d scenes.", len(scenes))
+        logger.info("Images: %d scenes starting", len(scenes))
         model = model or self.MODEL
 
         tasks =[self._bounded_generate(scene, style_bible, model) for scene in scenes]
@@ -35,7 +35,7 @@ class ImageService:
 
         successful = sum(1 for s in scenes if s.image_url is not None)
         failed     = len(scenes) - successful
-        logger.info("Image generation complete. Success: %d | Failed: %d", successful, failed)
+        logger.info("Images: %d ok, %d failed", successful, failed)
 
     async def _bounded_generate(self, scene: Scene, style_bible: Optional[StyleBible], model: str):
         async with self.semaphore:
@@ -56,7 +56,7 @@ class ImageService:
 
         url = self._build_url(full_prompt, negative_prompt, scene_seed, model)
 
-        logger.debug("Scene %d prompt: %s", scene.scene_number, full_prompt[:120])
+        logger.debug("Scene %d: %s...", scene.scene_number, full_prompt[:60])
 
         for attempt in range(1, self.MAX_RETRIES + 1):
             try:
@@ -72,11 +72,11 @@ class ImageService:
                         f.write(response.content)
 
                     scene.image_url = f"{self.base_url}/static/generated_images/{filename}"
-                    logger.info("✓ Scene %d image saved.", scene.scene_number)
+                    logger.info("✓ Scene %d done", scene.scene_number)
                     return 
 
             except Exception as e:
-                logger.warning("Attempt %d failed for scene %d: %s", attempt, scene.scene_number, str(e))
+                logger.warning("Scene %d attempt %d: %s", scene.scene_number, attempt, str(e)[:80])
                 if attempt == self.MAX_RETRIES:
                     scene.image_url = None
                 else:
